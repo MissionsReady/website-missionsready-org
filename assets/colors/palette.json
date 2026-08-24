@@ -1,0 +1,15 @@
+{
+  "primary": {
+    "Deep Blue": "#1E3A5F",
+    "Soft Gold": "#D9A441",
+    "White": "#FFFFFF"
+  },
+  "secondary": {
+    "Slate Gray": "#4A5568",
+    "Light Gray": "#CBD5E0"
+  },
+  "accent": {
+    "Royal Blue": "#2C5282",
+    "Sand Gold": "#E6C98B"
+  }
+}
