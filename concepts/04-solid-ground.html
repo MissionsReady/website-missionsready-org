@@ -144,26 +144,15 @@
       .layers-card h2 { margin: .45rem 0 .35rem; color: var(--white); font-size: 1.35rem; letter-spacing: -.025em; }
       .layers-card > p { margin: 0 0 .8rem; color: rgba(255,255,255,.78); font-size: .9rem; }
       .layer-list { display: grid; gap: .1rem; }
-      .layer-button {
-        position: relative;
+      .layer-item {
         display: grid;
-        width: 100%;
         grid-template-columns: 2rem 1fr;
         align-items: center;
         gap: .75rem;
         min-height: 48px;
         padding: .45rem 0;
-        border: 0;
         border-top: 1px solid var(--line-on-blue);
-        color: inherit;
-        background: transparent;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-        transition: background-color .2s ease, padding-left .2s ease;
       }
-      .layer-button:hover { background: rgba(255,255,255,.06); }
-      .layer-button[aria-pressed="true"] { padding-left: .6rem; border-left: 3px solid var(--gold); }
       .layer-number {
         display: grid;
         width: 1.8rem;
@@ -175,16 +164,8 @@
         font-size: .75rem;
         font-weight: 900;
       }
-      .layer-button strong { display: block; color: var(--white); }
-      .layer-button span { display: block; color: rgba(255,255,255,.78); font-size: .8rem; line-height: 1.35; }
-      .layer-detail {
-        margin-top: .85rem;
-        padding: .85rem .95rem;
-        border-left: 2px solid var(--sand);
-        color: rgba(255,255,255,.86);
-        background: rgba(0,0,0,.12);
-        font-size: .85rem;
-      }
+      .layer-item strong { display: block; color: var(--white); }
+      .layer-item span { display: block; color: rgba(255,255,255,.78); font-size: .8rem; line-height: 1.35; }
       section { padding: 6.5rem 0; }
       .intro { max-width: 700px; margin-bottom: 2.5rem; }
       .intro h2 { margin-top: .8rem; }
@@ -282,18 +263,17 @@
               <a class="button alt" href="#applications">Explore applications</a>
             </div>
           </div>
-          <aside class="layers-card" id="layers" aria-labelledby="layers-title" x-data="{ active: 1, details: { 1: 'A protected base keeps access, backups, and updates dependable.', 2: 'Ready-to-run tools help your team focus on people and ministry work.', 3: 'Plain-language guides make important tasks easier to repeat and teach.', 4: 'Clear systems give staff and volunteers a better experience of serving together.', 5: 'A steady pattern gives your ministry room to adapt without starting over.' } }">
+          <aside class="layers-card" id="layers" aria-labelledby="layers-title">
             <div class="eyebrow">How it works</div>
             <h2 id="layers-title">Five layers. One steady foundation.</h2>
             <p>Every layer turns a behind-the-scenes concern into a better ministry experience.</p>
             <div class="layer-list" aria-label="Platform layers">
-              <button class="layer-button" type="button" aria-controls="layer-detail" aria-pressed="true" x-on:click="active = 1" x-bind:aria-pressed="active === 1"><div class="layer-number">1</div><div><strong>Foundation</strong><span>Reliable, protected systems.</span></div></button>
-              <button class="layer-button" type="button" aria-controls="layer-detail" aria-pressed="false" x-on:click="active = 2" x-bind:aria-pressed="active === 2"><div class="layer-number">2</div><div><strong>Applications</strong><span>Ready tools for real work.</span></div></button>
-              <button class="layer-button" type="button" aria-controls="layer-detail" aria-pressed="false" x-on:click="active = 3" x-bind:aria-pressed="active === 3"><div class="layer-number">3</div><div><strong>Knowledge</strong><span>Clear guides for your team.</span></div></button>
-              <button class="layer-button" type="button" aria-controls="layer-detail" aria-pressed="false" x-on:click="active = 4" x-bind:aria-pressed="active === 4"><div class="layer-number">4</div><div><strong>Engagement</strong><span>Better support for people.</span></div></button>
-              <button class="layer-button" type="button" aria-controls="layer-detail" aria-pressed="false" x-on:click="active = 5" x-bind:aria-pressed="active === 5"><div class="layer-number">5</div><div><strong>Growth</strong><span>Room to serve more faithfully.</span></div></button>
+              <div class="layer-item"><div class="layer-number">1</div><div><strong>Foundation</strong><span>Reliable, protected systems.</span></div></div>
+              <div class="layer-item"><div class="layer-number">2</div><div><strong>Applications</strong><span>Ready tools for real work.</span></div></div>
+              <div class="layer-item"><div class="layer-number">3</div><div><strong>Knowledge</strong><span>Clear guides for your team.</span></div></div>
+              <div class="layer-item"><div class="layer-number">4</div><div><strong>Engagement</strong><span>Better support for people.</span></div></div>
+              <div class="layer-item"><div class="layer-number">5</div><div><strong>Growth</strong><span>Room to serve more faithfully.</span></div></div>
             </div>
-            <p class="layer-detail" id="layer-detail" aria-live="polite" x-text="details[active]">A protected base keeps access, backups, and updates dependable.</p>
           </aside>
         </div>
       </section>
