@@ -99,8 +99,8 @@
       h1 {
         max-width: 650px;
         margin: 1rem 0 1.35rem;
-        font-size: clamp(3.25rem, 7vw, 6.2rem);
-        letter-spacing: -.07em;
+        font-size: clamp(3rem, 6vw, 5.2rem);
+        letter-spacing: -.06em;
       }
       h2 {
         margin: 0 0 1rem;
@@ -143,7 +143,7 @@
       }
       .layers-card h2 { margin: .45rem 0 .35rem; color: var(--white); font-size: 1.35rem; letter-spacing: -.025em; }
       .layers-card > p { margin: 0 0 .8rem; color: rgba(255,255,255,.78); font-size: .9rem; }
-      .layer-list { display: grid; gap: .1rem; }
+      .layer-list { display: grid; gap: .1rem; margin: 0; padding: 0; list-style: none; }
       .layer-item {
         display: grid;
         grid-template-columns: 2rem 1fr;
@@ -170,18 +170,18 @@
       .intro { max-width: 700px; margin-bottom: 2.5rem; }
       .intro h2 { margin-top: .8rem; }
       .intro p { margin: 0; color: var(--slate); font-size: 1.08rem; }
-      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-      .step {
-        min-height: 220px;
+      .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+      .proof {
+        min-height: 210px;
         padding: 1.5rem;
         border: 1px solid var(--light);
         border-radius: .65rem;
         background: var(--white);
         border-top: 3px solid var(--royal);
       }
-      .step small { color: var(--royal); font-weight: 800; letter-spacing: .1em; }
-      .step h3 { margin: .9rem 0 .55rem; font-size: 1.25rem; }
-      .step p { margin: 0; color: var(--slate); }
+      .proof small { color: var(--royal); font-weight: 800; letter-spacing: .1em; }
+      .proof h3 { margin: .9rem 0 .55rem; font-size: 1.25rem; }
+      .proof p { margin: 0; color: var(--slate); }
       .applications { background: rgba(203,213,224,.2); }
       .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
       .app {
@@ -198,14 +198,41 @@
       .app strong { display: block; margin-bottom: .35rem; }
       .app span { color: var(--slate); font-size: .88rem; }
       .app-arrow { position: absolute; right: 1.2rem; bottom: 1rem; color: var(--gold); font-size: 1.1rem; }
+      .resources { border-top: 1px solid rgba(203,213,224,.7); }
+      .resource-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1rem; }
+      .resource-primary, .resource-links {
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        border: 1px solid var(--light);
+        border-radius: .65rem;
+        background: var(--white);
+      }
+      .resource-primary { border-top: 3px solid var(--gold); }
+      .resource-primary h3 { margin: .75rem 0; font-size: 1.65rem; letter-spacing: -.03em; }
+      .resource-primary p { max-width: 580px; margin: 0; color: var(--slate); }
+      .resource-primary .button { margin-top: 1.5rem; }
+      .resource-links { display: grid; align-content: center; gap: .35rem; }
+      .resource-link {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: .9rem 0;
+        border-bottom: 1px solid var(--light);
+        color: var(--blue);
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .resource-link:last-child { border-bottom: 0; }
+      .resource-link:hover { color: var(--royal); }
+      .resource-link span:last-child { color: var(--gold); }
       footer { padding: 2rem 0; color: var(--white); background: var(--blue); }
       footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
       footer small { color: rgba(255,255,255,.78); }
       @media (max-width: 820px) {
         .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
         .layers-card { max-width: 620px; }
-        .steps { grid-template-columns: 1fr 1fr; }
+        .proof-grid { grid-template-columns: 1fr 1fr; }
         .app-grid { grid-template-columns: 1fr 1fr; }
+        .resource-grid { grid-template-columns: 1fr; }
       }
       @media (max-width: 560px) {
         .wrap { width: min(100% - 2rem, 1160px); }
@@ -224,7 +251,7 @@
         .nav-links a { padding: .7rem 0; }
         .hero { padding: 4rem 0 4.5rem; }
         section { padding: 4.5rem 0; }
-        .steps, .app-grid { grid-template-columns: 1fr; }
+        .proof-grid, .app-grid { grid-template-columns: 1fr; }
         footer .wrap { display: block; }
         footer small { display: block; margin-top: .75rem; }
       }
@@ -236,9 +263,9 @@
   </head>
   <body>
     <header class="site-header">
-      <nav class="nav wrap" aria-label="Primary navigation" x-data="{ open: false }">
+      <nav class="nav wrap" aria-label="Primary navigation" x-data="{ open: false }" x-on:keydown.escape.window="open = false">
         <a class="brand" href="../index.html">
-          <img class="logo" src="../assets/logos/github_avatar.png" alt="MissionsReady logo">
+          <img class="logo" src="../assets/logos/github_avatar.png" alt="">
           <span>MissionsReady</span>
         </a>
         <button class="menu-toggle" type="button" aria-controls="primary-links" aria-expanded="false" x-on:click="open = !open" x-bind:aria-expanded="open.toString()">
@@ -246,8 +273,9 @@
         </button>
         <div class="nav-links" id="primary-links" x-bind:class="{ 'is-open': open }">
           <a href="#layers" x-on:click="open = false">How it works</a>
-          <a href="#approach" x-on:click="open = false">Simple steps</a>
+          <a href="#proof" x-on:click="open = false">Why it lasts</a>
           <a href="#applications" x-on:click="open = false">Applications</a>
+          <a href="#resources" x-on:click="open = false">Get started</a>
         </div>
       </nav>
     </header>
@@ -257,37 +285,37 @@
           <div>
             <div class="eyebrow">Technology that serves ministry</div>
             <h1>Build on solid ground.</h1>
-            <p class="hero-copy">Practical, secure technology your ministry team can understand, use, and improve with confidence.</p>
+            <p class="hero-copy">Secure building blocks, prepared applications, and clear guidance for ministries and the technical partners who support them.</p>
             <div class="actions">
-              <a class="button" href="#approach">See the approach</a>
+              <a class="button" href="#layers">See how it works</a>
               <a class="button alt" href="#applications">Explore applications</a>
             </div>
           </div>
           <aside class="layers-card" id="layers" aria-labelledby="layers-title">
-            <div class="eyebrow">How it works</div>
-            <h2 id="layers-title">Five layers. One steady foundation.</h2>
-            <p>Every layer turns a behind-the-scenes concern into a better ministry experience.</p>
-            <div class="layer-list" aria-label="Platform layers">
-              <div class="layer-item"><div class="layer-number">1</div><div><strong>Foundation</strong><span>Reliable, protected systems.</span></div></div>
-              <div class="layer-item"><div class="layer-number">2</div><div><strong>Applications</strong><span>Ready tools for real work.</span></div></div>
-              <div class="layer-item"><div class="layer-number">3</div><div><strong>Knowledge</strong><span>Clear guides for your team.</span></div></div>
-              <div class="layer-item"><div class="layer-number">4</div><div><strong>Engagement</strong><span>Better support for people.</span></div></div>
-              <div class="layer-item"><div class="layer-number">5</div><div><strong>Growth</strong><span>Room to serve more faithfully.</span></div></div>
-            </div>
+            <div class="eyebrow">How MissionsReady delivers</div>
+            <h2 id="layers-title">Four parts. One dependable platform.</h2>
+            <p>Each part turns technical complexity into something a ministry can use and sustain.</p>
+            <ol class="layer-list" aria-label="MissionsReady value model">
+              <li class="layer-item"><div class="layer-number">1</div><div><strong>Foundation</strong><span>Hardened, reproducible systems.</span></div></li>
+              <li class="layer-item"><div class="layer-number">2</div><div><strong>Blueprints</strong><span>Secure, repeatable deployments.</span></div></li>
+              <li class="layer-item"><div class="layer-number">3</div><div><strong>Applications</strong><span>Tools for real ministry work.</span></div></li>
+              <li class="layer-item"><div class="layer-number">4</div><div><strong>Operations</strong><span>Guidance for updates and recovery.</span></div></li>
+            </ol>
           </aside>
         </div>
       </section>
-      <section id="approach">
+      <section id="proof">
         <div class="wrap">
           <div class="intro">
-            <div class="eyebrow">A practical approach</div>
-            <h2>Make dependable technology easier to live with.</h2>
-            <p>MissionsReady pairs sensible safeguards with plain-language guidance, so your team can spend less time untangling systems and more time serving people.</p>
+            <div class="eyebrow">Why it lasts</div>
+            <h2>Security you can understand and act on.</h2>
+            <p>MissionsReady makes the important parts visible and repeatable, reducing dependence on one person’s memory and giving ministry teams a clearer path through change.</p>
           </div>
-          <div class="steps">
-            <article class="step"><small>01 / BEGIN</small><h3>Start with the work.</h3><p>Choose a starting point that matches what your ministry needs today.</p></article>
-            <article class="step"><small>02 / SET UP</small><h3>Follow a clear path.</h3><p>Use sensible access, backups, and updates without guessing at every step.</p></article>
-            <article class="step"><small>03 / SERVE</small><h3>Keep improving.</h3><p>Build habits your team can repeat, teach, and support as needs change.</p></article>
+          <div class="proof-grid">
+            <article class="proof"><small>01 / REBUILD</small><h3>Return to a known-good state.</h3><p>Documented inputs and minimal Wolfi-based images make infrastructure easier to recreate and update.</p></article>
+            <article class="proof"><small>02 / KNOW</small><h3>See what is deployed.</h3><p>Software bills of materials identify the components and versions inside each release.</p></article>
+            <article class="proof"><small>03 / COMPARE</small><h3>Focus on what changed.</h3><p>CVE differentials show which security findings are new, resolved, or still present.</p></article>
+            <article class="proof"><small>04 / RECOVER</small><h3>Prepare before trouble arrives.</h3><p>Clear guidance for access, backups, updates, and recovery supports ministry continuity.</p></article>
           </div>
         </div>
       </section>
@@ -306,11 +334,33 @@
           </div>
         </div>
       </section>
+      <section class="resources" id="resources">
+        <div class="wrap">
+          <div class="intro">
+            <div class="eyebrow">Take the next step</div>
+            <h2>Start with the question in front of you.</h2>
+            <p>Review the platform, choose a prepared application, or explore the repositories behind MissionsReady.</p>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-primary">
+              <div class="eyebrow">For ministry teams</div>
+              <h3>Understand the platform before you deploy.</h3>
+              <p>Begin with the MissionsReady documentation repository for ministry-friendly context, operating principles, and the path toward a first deployment.</p>
+              <a class="button" href="https://github.com/MissionsReady/docs-main">Read the documentation</a>
+            </article>
+            <nav class="resource-links" aria-label="MissionsReady repositories">
+              <a class="resource-link" href="https://github.com/MissionsReady/core-blueprints"><span>Explore deployment blueprints</span><span aria-hidden="true">↗</span></a>
+              <a class="resource-link" href="https://github.com/MissionsReady/core-wolfi-builds"><span>Review reproducible builds</span><span aria-hidden="true">↗</span></a>
+              <a class="resource-link" href="https://github.com/MissionsReady"><span>Browse the organization</span><span aria-hidden="true">↗</span></a>
+            </nav>
+          </div>
+        </div>
+      </section>
     </main>
     <footer>
       <div class="wrap">
         <div class="brand"><img class="logo" src="../assets/logos/github_avatar.png" alt=""><span>MissionsReady</span></div>
-        <small>Secure ministry infrastructure</small>
+        <small>Secure Ministry Infrastructure</small>
       </div>
     </footer>
   </body>
